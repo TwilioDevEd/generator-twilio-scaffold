@@ -24,11 +24,11 @@ public class IndexServlet extends HttpServlet {
 
   private static final Logger LOG = Logger.getLogger(IndexServlet.class.getName());
 
-  private final <%= model_name %>Repository <%= model_name.unCapFirst() %>Repository;
+  private final <%= model_name %>Repository <%= tutorial_varname %>Repository;
 
   @Inject
-  public IndexServlet(final <%= model_name %>Repository <%= model_name.unCapFirst() %>Repository) {
-    this.<%= model_name.unCapFirst() %>Repository = <%= model_name.unCapFirst() %>Repository;
+  public IndexServlet(final <%= model_name %>Repository <%= tutorial_varname %>Repository) {
+    this.<%= tutorial_varname %>Repository = <%= tutorial_varname %>Repository;
   }
 
   @Override

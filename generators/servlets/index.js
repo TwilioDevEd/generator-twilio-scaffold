@@ -64,12 +64,13 @@ module.exports = twilio.Base.extend({
                       package_folder  + `/domain/repository/${model_name}Repository.java`);
     },
     installResourceFiles : function() {
+      let tutorial_varname = this.getTemplateVar('tutorial_name');
       this.log('Installing resources...');
       this.copyTplFile('.travis.yml');
       this.copyTplFile('LICENSE');
       this.copyTplFile('src/main/resources/META-INF/persistence.xml');
       this.copyTplFile('src/main/webapp/index.jsp');
-      this.copyTplFile('src/main/webapp/css/main.css');
+      this.copyTplFile('src/main/webapp/css/main.css',`src/main/webapp/css/${tutorial_varname}.css`);
       this.copyTplFile('src/main/webapp/WEB-INF/web.xml');
     }
   }

@@ -50,14 +50,12 @@ exports.Base = generators.Base.extend({
        type    : 'input',
        name    : 'tutorial_title',
        message : 'Tutorial Verbose Title (platform agnostic)',
-       default : this.toTitle(this.appname),
-       store   : true
+       default : this.toTitle(this.appname)
      }, {
        type    : 'input',
        name    : 'tutorial_name',
        message : 'Canonical Name',
-       default : answers => answers.tutorial_title.toSlug(),
-       store   : true
+       default : answers => answers.tutorial_title.toSlug()
      }].concat(questionsArray)).then(function (answers) {
        //Infered vars
        answers.database_name = answers.tutorial_name;
