@@ -63,6 +63,7 @@ exports.Base = generators.Base.extend({
        answers.database_name = answers.tutorial_name;
        answers.project_name  = answers.tutorial_name + "-" + this.framework_name;
        answers.tutorial_classname = answers.tutorial_title.replace(' ', '').capFirst();
+       answers.tutorial_varname = answers.tutorial_classname.unCapFirst();
        //This vars gonna be seen by the template files
        this.exportAsTemplatesVars(answers);
        //Delegate to callback. If changes something should export variables.

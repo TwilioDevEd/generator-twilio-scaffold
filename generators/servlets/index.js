@@ -65,10 +65,11 @@ module.exports = twilio.Base.extend({
     },
     installResourceFiles : function() {
       this.log('Installing resources...');
+      this.copyTplFile('.travis.yml');
+      this.copyTplFile('LICENSE');
       this.copyTplFile('src/main/resources/META-INF/persistence.xml');
       this.copyTplFile('src/main/webapp/index.jsp');
       this.copyTplFile('src/main/webapp/css/main.css');
-      this.copyTplFile('src/main/webapp/scripts/main.js');
       this.copyTplFile('src/main/webapp/WEB-INF/web.xml');
     }
   }

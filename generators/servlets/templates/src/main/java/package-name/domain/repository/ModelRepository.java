@@ -1,4 +1,4 @@
-package <%= java_package %>.domain.repository;
+package <%= java_package %>.domain.<%= model_name.unCapFirst() %>Repository;
 
 import <%= java_package %>.domain.model.<%= model_name %>;
 

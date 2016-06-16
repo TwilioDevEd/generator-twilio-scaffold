@@ -24,11 +24,11 @@ public class IndexServlet extends HttpServlet {
 
   private static final Logger LOG = Logger.getLogger(IndexServlet.class.getName());
 
-  private final <%= model_name %>Repository repository;
+  private final <%= model_name %>Repository <%= model_name.unCapFirst() %>Repository;
 
   @Inject
-  public IndexServlet(final <%= model_name %>Repository repository) {
-    this.repository = repository;
+  public IndexServlet(final <%= model_name %>Repository <%= model_name.unCapFirst() %>Repository) {
+    this.<%= model_name.unCapFirst() %>Repository = <%= model_name.unCapFirst() %>Repository;
   }
 
   @Override
@@ -36,13 +36,6 @@ public class IndexServlet extends HttpServlet {
       IOException {
     req.setAttribute("param-name", "param-value");
     req.getRequestDispatcher("index.jsp").forward(req, resp);
-  }
-
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
-      IOException {
-    Optional<String> fullNameQuery = Optional.ofNullable(req.getParameter("param-name"));
-    req.getRequestDispatcher("endpoint-servlet-path").forward(req, resp);
   }
 <% if(use_seeding){ %>
   @Override
