@@ -4,16 +4,16 @@ var twilio = require("../twilio.js");
 
 var frameworks = twilio.frameworks;
 
-module.exports = twilio.projects.Base.extend({
+module.exports = twilio.Base.extend({
   constructor: function () {
-      twilio.projects.Base.apply(this, arguments);
+      twilio.Base.apply(this, arguments);
       console.log(require('../twilio-welcome'));
   },
   prompting: function(){
       return this.prompt([{
         type    : 'list',
         name    : 'framework',
-        message : 'What framework are you going to use?',
+        message : 'Which framework are you going to use?',
         choices : frameworks.toArray(),
         default : frameworks.RAILS
       }]).then(function (answers) {

@@ -1,5 +1,4 @@
 /** Site style **/
-
 footer {
     bottom: 10px;
 }
@@ -15,12 +14,6 @@ footer p{
 .body-content {
     padding-left: 2%;
     padding-right: 2%;
-}
-
-.response{
-   background-color: #FFF7B3;
-   margin: 2em auto;
-   padding: 1em;
 }
 
 .media{
@@ -42,12 +35,3 @@ footer p{
 .body-content{
   margin: 1em auto 2em;
 }
-
-
-@media (max-width: 768px) {
-
-  .body-content input.btn{
-    margin-top: 2em;
-  }
-}
-

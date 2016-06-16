@@ -9,11 +9,6 @@ Object.prototype.toArray = function(){
     return result;
 }
 
-String.prototype.toTitle = function()
-{
-    return this.split(' ').map(word => word.trim().capFirst()).join(' ');
-}
-
 String.prototype.toSlug = function()
 {
    return this
@@ -21,6 +16,14 @@ String.prototype.toSlug = function()
           .replace(/[^\w ]+/g,'')
           .replace(/ +/g,'-')
           ;
+}
+
+String.prototype.minimize = function(){
+     return this
+            .toLowerCase()
+            .replace(/[^\w ]+/g,'')
+            .replace('[-|_]', '')
+            ;
 }
 
 String.prototype.capFirst = function()

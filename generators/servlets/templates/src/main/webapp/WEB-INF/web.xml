@@ -9,7 +9,7 @@
 
   <listener>
     <listener-class>
-      com.twilio.employeedirectory.application.config.BeansGuiceConfig
+      <%= java_package %>.application.config.BeansGuiceConfig
     </listener-class>
   </listener>
 

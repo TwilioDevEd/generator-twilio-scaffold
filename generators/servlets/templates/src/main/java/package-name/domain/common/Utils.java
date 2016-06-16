@@ -1,4 +1,4 @@
-package com.twilio.employeedirectory.domain.common;
+package <%= java_package %>.domain.common;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;

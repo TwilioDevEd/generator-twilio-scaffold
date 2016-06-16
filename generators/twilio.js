@@ -1,39 +1,48 @@
 var generators = require('yeoman-generator');
+var chalk = require('chalk');
 
 //Available frameworks for projects
 exports.frameworks = {
-    SERVLETS: 'Servlets',
-    /*
-    @TODO
-    LARAVEL : 'Laravel',
-    FLASK   : 'Flask',
-    NET     : '.NET',
-    RAILS   : 'Rails',
-    SINATRA : 'Sinatra',
-    EXPRESS : 'Express'*/
+    SERVLETS  : 'Servlets'
 }
 
 //Base proper
-exports.projects = {
-  DEFAULT_INPUT_VALUE : 'CHANGE ME OR DELETE ME'
+exports.common = {
+  DEFAULT_INPUT_VALUE : 'CHANGE ME OR DELETE ME',
+  validateText : function(context, input, minLength, errMsg)
+  {
+      var done = context.async();
+      if (input.length < minLength) {
+        done(errMsg);
+        return;
+      }
+      done(null, true);
+  }
 }
 
 //Base implementation
-exports.projects.Base = generators.Base.extend({
+exports.Base = generators.Base.extend({
   constructor: function () {
     generators.Base.apply(this, arguments);
   },
   ask_webhooks : {
     type    : 'confirm',
     name    : 'use_webhooks',
-    message : 'Your app uses webhooks?',
-    default : exports.projects.DEFAULT_INPUT_VALUE
+    message : 'Your app uses webhooks?'
   },
   ask_seeding : {
     type    : 'confirm',
     name    : 'use_seeding',
-    message : 'Create a seeding mechanism?',
-    default : exports.projects.DEFAULT_INPUT_VALUE
+    message : 'Create a seeding mechanism?'
+  },
+  ask_model : {
+    type    : 'input',
+    name    : 'model_name',
+    message : 'Name of the main model',
+    default : 'Example',
+    filter  : modelName => modelName.trim().capFirst(),
+    validate: function(input) { exports.common.validateText(this, input, 3, 'Enter a valid model name, e.g., Employee') },
+    store   : true
   },
   generatePlatformPrompt : function(questionsArray, callback)
   {
@@ -41,26 +50,34 @@ exports.projects.Base = generators.Base.extend({
        type    : 'input',
        name    : 'tutorial_title',
        message : 'Tutorial Verbose Title (platform agnostic)',
-       default : this.appname.toTitle()
+       default : this.toTitle(this.appname),
+       store   : true
      }, {
        type    : 'input',
        name    : 'tutorial_name',
        message : 'Canonical Name',
-       default : function(answers)
-       {
-         return answers.tutorial_title.toSlug();
-       }
+       default : answers => answers.tutorial_title.toSlug(),
+       store   : true
      }].concat(questionsArray)).then(function (answers) {
        //Infered vars
        answers.database_name = answers.tutorial_name;
-       answers.project_name = answers.tutorial_name + "-" + this.framework_name;
+       answers.project_name  = answers.tutorial_name + "-" + this.framework_name;
+       answers.tutorial_classname = answers.tutorial_title.replace(' ', '').capFirst();
        //This vars gonna be seen by the template files
        this.exportAsTemplatesVars(answers);
-       //Delegate to callback
-       callback.call(this, answers);
+       //Delegate to callback. If changes something should export variables.
+       callback && callback.call(this, answers);
     }.bind(this)).catch(function(err){
        this.env.error("Interrupted while entering data: " + err);
     }.bind(this));
+  },
+  toTitle : function(text)
+  {
+     return text.replace(`${this.framework_name}`, '').trim().split(' ').map(word => word.trim().capFirst()).join(' ');
+  },
+  strong : function(text)
+  {
+     return chalk.cyan(text);
   },
   exportAsTemplatesVars : function(vars)
   {
@@ -72,35 +89,18 @@ exports.projects.Base = generators.Base.extend({
   },
   getTemplateVar : function(varname)
   {
-      return this.exported_vars[varname] || this.exported_vars;
+      return (typeof this.exported_vars[varname] === 'undefined') ? this.exported_vars : this.exported_vars[varname];
   },
   copyFile : function(filename)
   {
-     this.fs.copy(filename, filename);
+     this.fs.copy(this.templatePath(filename), this.destinationPath(filename));
   },
-  copyTplFile : function(filename)
+  copyTplFile : function(sourceFile, destFile, options)
   {
-     this.fs.copyTpl(this.templatePath(filename), this.destinationPath(filename), this.exported_vars);
+     this.template(this.templatePath(sourceFile), this.destinationPath(destFile || sourceFile), this.exported_vars, options);
   },
   deleteFile : function(filename)
   {
      this.fs.delete(this.destinationPath(filename));
-  },
-  processDirectory : function(source, destination) {
-      var root = this.isPathAbsolute(source) ? source : path.join(this.sourceRoot(), source);
-      var files = this.expandFiles('**', { dot: true, cwd: root });
-
-      for (var i = 0; i < files.length; i++) {
-          var f = files[i];
-          var src = path.join(root, f);
-          if(path.basename(f).indexOf('_') == 0){
-              var dest = path.join(destination, path.dirname(f), path.basename(f).replace(/^_/, ''));
-              this.template(src, dest);
-          }
-          else{
-              var dest = path.join(destination, f);
-              this.copy(src, dest);
-          }
-      }
   }
 });

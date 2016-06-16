@@ -11,7 +11,7 @@ checkstyle {
     toolVersion = "6.1.1"
 }
 <% } %>
-group 'com.twilio.employeedirectory'
+group '<%= java_package %>'
 version '1.0'
 
 sourceCompatibility = 1.8
