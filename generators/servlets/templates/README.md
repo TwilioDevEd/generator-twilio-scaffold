@@ -4,14 +4,19 @@
 
 # <%= tutorial_title %> on Servlets
 
-[![Build Status](https://travis-ci.org/TwilioDevEd/<%= project_name %>.svg?branch=master)](https://travis-ci.org/TwilioDevEd/<%= tutorial_name %>)
+[![Build Status](https://travis-ci.org/TwilioDevEd/<%= project_name %>.svg?branch=master)](https://travis-ci.org/TwilioDevEd/<%= project_name %>)
 
 [@TODO description of the tutorial here]
 
+[Read the full tutorial here](//www.twilio.com/docs/tutorials/walkthrough/
+  <%= tutorial_shortname %>/<%= project_lang %>/<%= project_framework %>)
+
 ### Prerequisites
 
-1. [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) installed in your operative system.
-1. A Twilio account with a verified [phone number][twilio-phone-number]. (Get a [free account](//www.twilio.com/try-twilio?utm_campaign=tutorials&utm_medium=readme) here.).  If you are using a Twilio Trial Account, you can learn all about it [here](https://www.twilio.com/help/faq/twilio-basics/how-does-twilios-free-trial-work).
+1. [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+installed in your operative system.
+1. A Twilio account with a verified [phone number][twilio-phone-number]. (Get a [free account](//www.twilio.com/try-twilio?utm_campaign=tutorials&utm_medium=readme) here.).
+If you are using a Twilio Trial Account, you can learn all about it [here](https://www.twilio.com/help/faq/twilio-basics/how-does-twilios-free-trial-work).
 
 ### Local Development
 

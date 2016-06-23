@@ -18,7 +18,7 @@ String.prototype.toSlug = function()
           ;
 }
 
-String.prototype.minimize = function(){
+String.prototype.shorten = function(){
      return this
             .toLowerCase()
             .replace(/[^\w ]+/g,'')

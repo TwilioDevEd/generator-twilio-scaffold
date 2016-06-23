@@ -28,12 +28,14 @@ exports.Base = generators.Base.extend({
   ask_webhooks : {
     type    : 'confirm',
     name    : 'use_webhooks',
-    message : 'Your app uses webhooks?'
+    message : 'Your app uses webhooks?',
+    store   : true
   },
   ask_seeding : {
     type    : 'confirm',
     name    : 'use_seeding',
-    message : 'Create a seeding mechanism?'
+    message : 'Create a seeding mechanism?',
+    store   : true
   },
   ask_model : {
     type    : 'input',
@@ -58,8 +60,11 @@ exports.Base = generators.Base.extend({
        default : answers => answers.tutorial_title.toSlug()
      }].concat(questionsArray)).then(function (answers) {
        //Infered vars
+       answers.project_lang = this.project_lang;
+       answers.project_framework = this.project_framework;
        answers.database_name = answers.tutorial_name;
-       answers.project_name  = answers.tutorial_name + "-" + this.framework_name;
+       answers.tutorial_shortname = answers.tutorial_name.shorten();
+       answers.project_name  = answers.tutorial_name + "-" + this.project_framework;
        answers.tutorial_classname = answers.tutorial_title.replace(' ', '').capFirst();
        answers.tutorial_varname = answers.tutorial_classname.unCapFirst();
        //This vars gonna be seen by the template files
@@ -72,7 +77,7 @@ exports.Base = generators.Base.extend({
   },
   toTitle : function(text)
   {
-     return text.replace(`${this.framework_name}`, '').trim().split(' ').map(word => word.trim().capFirst()).join(' ');
+     return text.replace(`${this.project_framework}`, '').trim().split(' ').map(word => word.trim().capFirst()).join(' ');
   },
   strong : function(text)
   {
@@ -90,9 +95,9 @@ exports.Base = generators.Base.extend({
   {
       return (typeof this.exported_vars[varname] === 'undefined') ? this.exported_vars : this.exported_vars[varname];
   },
-  copyFile : function(filename)
+  copyFile : function(sourceFile, destFile)
   {
-     this.fs.copy(this.templatePath(filename), this.destinationPath(filename));
+     this.fs.copy(this.templatePath(sourceFile), this.destinationPath(destFile || sourceFile));
   },
   copyTplFile : function(sourceFile, destFile, options)
   {

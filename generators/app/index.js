@@ -18,17 +18,19 @@ module.exports = twilio.Base.extend({
         default : frameworks.RAILS
       }]).then(function (answers) {
          //Infered vars
-         answers.framework_name = answers.framework.toSlug();
+         answers.project_framework = answers.framework.toSlug();
          //This vars gonna be seen by the template files
          this.exportAsTemplatesVars(answers);
          //Delegate to platform generator
-         this.composeWith('twilio-scaffold:' + this.getTemplateVar('framework_name'));
+         this.composeWith('twilio-scaffold:' + this.getTemplateVar('project_framework'));
       }.bind(this)).catch(function(err){
          this.env.error("Interrupted: " + err);
       }.bind(this));
   },
   writing: function () {
-    this.log('Copying general files...');
+    this.log("Copying general files...");
+    this.copyFile('LICENSE');
+    this.copyFile('.env.example');
     this.copyFile('.editorconfig');
   }
 });
